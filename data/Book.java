@@ -1,20 +1,21 @@
 package data;
 
-public class Book {
+import java.time.LocalDate;
+
+public class Book extends Publication {
 	
-	private String title;
 	private String author;
 	private String isbn;
-	private int year;
-	private int pageNumber;
+	private int pages;
 	
-	public String getTitle() {
-		return title;
+	public Book(String title, String author, String isbn, int year, int pages, String publisher){
+		super(year, title, publisher);
+		this.setAuthor(author);
+		this.setIsbn(isbn);
+		this.setPages(pages);
+		
 	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	
 
 	public String getAuthor() {
 		return author;
@@ -32,43 +33,68 @@ public class Book {
 		this.isbn = isbn;
 	}
 
-	public int getYear() {
-		return year;
+
+	public int getPages() {
+		return pages;
 	}
 
-	public void setYear(int year) {
-		this.year = year;
+	public void setPages(int pageNumber) {
+		this.pages = pageNumber;
 	}
 
-	public int getPageNumber() {
-		return pageNumber;
-	}
-
-	public void setPageNumber(int pageNumber) {
-		this.pageNumber = pageNumber;
-	}
-
-	public Book(String title, String author, String isbn, int year, int pageNumber){
-		this.setTitle(title);
-		this.setAuthor(author);
-		this.setIsbn(isbn);
-		this.setYear(year);
-		this.setPageNumber(pageNumber);
+	
+	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(32);
+		builder.append(getAuthor());
+		builder.append(", ");
+		builder.append(getTitle());
+		builder.append(", ");
+		builder.append(getDate().getYear());
+		builder.append(", ");
+		builder.append(getPages());
+		builder.append(", ");
+		builder.append(getIsbn());
+		builder.append(", ");
+		builder.append(getPublisher());
+	
+		return builder.toString();
 		
 	}
-	
-	public Book(Book book){
-		this(book.title, book.author, book.isbn, book.year, book.pageNumber);
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
+		result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
+		result = prime * result + pages;
+		return result;
 	}
-	
-	public void showBook(){
-		String info = getAuthor();
-		info += ", " + getTitle();
-		info += ", " + getYear();
-		info += ", " + getPageNumber();
-		info += ", " + getIsbn();
-		
-		System.out.println(info);
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		if (author == null) {
+			if (other.author != null)
+				return false;
+		} else if (!author.equals(other.author))
+			return false;
+		if (isbn == null) {
+			if (other.isbn != null)
+				return false;
+		} else if (!isbn.equals(other.isbn))
+			return false;
+		if (pages != other.pages)
+			return false;
+		return true;
 	}
 
 }
